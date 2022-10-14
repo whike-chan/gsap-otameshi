@@ -26,14 +26,19 @@ const $trigger = document.getElementById('trigger');
 const $wrapper = document.getElementById('wrap');
 const $field = document.getElementById('field');
 
-gsap.to($field, {
-  x: () => -($field.clientWidth - $wrapper.clientWidth),
-  ease: 'none',
+const wrapperWidth =  $wrapper.clientWidth;
+const wrapperHeight = $wrapper.clientHeight;
+const fieldWidth = $field.clientWidth;
+const fieldHeight = $field.clientHeight;
 
+gsap.timeline({
+  defaults: {
+    ease: 'none',
+  },
   scrollTrigger: {
     trigger: $trigger,
     start: 'top top',
-    end: () => `+=${$field.clientWidth - $wrapper.clientWidth}`,
+    end: () => `+=${fieldWidth - wrapperWidth}`,
     scrub: true,
     pin: true,
     anticipatePin: 1,
@@ -41,14 +46,5 @@ gsap.to($field, {
     markers: true,
   }
 })
-
-let anime = gsap.timeline();
-ScrollTrigger.create({
-  animation: anime,
-  trigger: ".side-scroll",
-  start: "top top",
-  end: () => `+=${$field.clientWidth - $wrapper.clientWidth}`,
-  scrub: true,
-})
-
-anime.to('#img', { x: 10, y: -10, duration: 1});
+  .to($field, { x: ()=> 100, y: ()=> fieldHeight })
+  .to($field, { x: ()=> 200, y: ()=> 0, })
